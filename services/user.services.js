@@ -1,4 +1,4 @@
-const UserModel = require("../model/user.model");
+const userModel = require("../model/user.model");
 const jwt = require("jsonwebtoken");
 
 
@@ -7,7 +7,7 @@ class UserService{
     {
         try
         {
-            const createUser = new UserModel({email, password, phoneNumber});
+            const createUser = new userModel({email, password, phoneNumber});
             return await createUser.save();
         }
         catch(err)
@@ -18,7 +18,7 @@ class UserService{
     static async checkUserEmail(email)
     {
         try
-        {
+        { 
             return await userModel.findOne({email});
         }
         catch(err)

@@ -5,9 +5,19 @@ exports.register = async(req, res, next) => {
     {
         const {email, password, phoneNumber} = req.body;
 
-        const sucessRes = await UserService.registerUser(email, password, phoneNumber);
+        const userCheck1 = await UserService.checkUserEmail(email);
+        const userCheck2 = await UserService.checkUserPhoneNumber(phoneNumber);
 
-        res.json({status:true, succes:"User registered successfully"})
+        
+        if (!userCheck1 && !userCheck2)
+            {
+                const sucessRes = await UserService.registerUser(email, password, phoneNumber);
+                res.json({status:true, succes:"User registered successfully"});
+                return;
+            }
+            res.status(400).json({error: "This user is already registered"});
+        
+        
     }
     catch (err)
     {
@@ -29,7 +39,6 @@ exports.login = async(req, res, next) => {
                 return
             }
         const userCheck2 = await UserService.checkUserPhoneNumber(phoneNumber);
-
         if (!userCheck2)
             {
                 res.status(400).json({error: "No such user was found"});
