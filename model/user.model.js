@@ -10,13 +10,18 @@ const rounds = process.env.ROUNDS;
 const userSchema = new Schema({
     email:{
         type:String,
-        lowercase:true,
+        lowercase: true,
         required: true,
         unique: true
     },
     password:{
         type:String,
         required: true
+    },
+    phoneNumber:{
+        type:String,
+        required: true,
+        unique: true
     }
 });
 
@@ -51,4 +56,4 @@ userSchema.methods.comparePassword = async function(userPassword)
 }
 const userModel = db.model("user", userSchema);
 
-module.exports = userModel; 
+module.exports = userModel;

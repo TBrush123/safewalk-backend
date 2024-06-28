@@ -1,13 +1,13 @@
-const userModel = require("../model/user.model");
+const UserModel = require("../model/user.model");
 const jwt = require("jsonwebtoken");
 
 
 class UserService{
-    static async registerUser(email, password)
+    static async registerUser(email, password, phoneNumber)
     {
         try
         {
-            const createUser = new UserModel({email, password});
+            const createUser = new UserModel({email, password, phoneNumber});
             return await createUser.save();
         }
         catch(err)
@@ -15,11 +15,22 @@ class UserService{
             throw err;
         }
     }
-    static async checkUser(email)
+    static async checkUserEmail(email)
     {
         try
         {
             return await userModel.findOne({email});
+        }
+        catch(err)
+        {
+            throw err;
+        }
+    }
+    static async checkUserPhoneNumber(phoneNumber)
+    {
+        try
+        {
+            return await userModel.findOne({phoneNumber});
         }
         catch(err)
         {

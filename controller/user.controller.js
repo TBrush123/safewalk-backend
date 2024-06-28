@@ -3,9 +3,9 @@ const UserService = require("../services/user.services");
 exports.register = async(req, res, next) => {
     try
     {
-        const {email, password} = req.body;
+        const {email, password, phoneNumber} = req.body;
 
-        const sucessRes = await UserService.registerUser(email, password);
+        const sucessRes = await UserService.registerUser(email, password, phoneNumber);
 
         res.json({status:true, succes:"User registered successfully"})
     }
@@ -19,11 +19,18 @@ exports.register = async(req, res, next) => {
 exports.login = async(req, res, next) => {
     try
     {
-        const {email, password} = req.body;
+        const {email, password, phoneNumber} = req.body;
         
-        const user = await UserService.checkUser(email);
+        const userCheck1 = await UserService.checkUserEmail(email);
 
-        if (!user)
+        if (!userCheck1)
+            {
+                res.status(400).json({error: "No such user was found"});
+                return
+            }
+        const userCheck2 = await UserService.checkUserPhoneNumber(phoneNumber);
+
+        if (!userCheck2)
             {
                 res.status(400).json({error: "No such user was found"});
                 return
