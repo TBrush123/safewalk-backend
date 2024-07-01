@@ -12,6 +12,6 @@ const darkZoneSchema = new Schema({
 });
 
 
-const userModel = db.model("darkZone", darkZoneSchema);
+const darkZoneModel = db.model("darkZone", darkZoneSchema);
 
-module.exports = userModel;
+module.exports = darkZoneModel;

@@ -7,7 +7,7 @@ exports.register = async (req, res, next) => {
     const userCheck1 = await UserService.checkUserEmail(email);
     const userCheck2 = await UserService.checkUserPhoneNumber(phoneNumber);
 
-    if (!userCheck1 && !userCheck2) {
+    if (!userCheck1 || !userCheck2) {
       const sucessRes = await UserService.registerUser(
         email,
         password,
